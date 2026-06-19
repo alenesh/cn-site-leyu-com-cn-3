@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://alenesh.github.io/cn-site-leyu-com-cn-3/sitemap.xml
