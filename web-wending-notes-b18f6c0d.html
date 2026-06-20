@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>问鼎H5 · 日常查询与对照阅读</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f9fc;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1d2b3a;
+            line-height: 1.6;
+            padding: 0 16px 48px;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding-top: 24px;
+        }
+
+        /* 主视觉 — 柔和水彩网格背景 */
+        .hero {
+            background: linear-gradient(145deg, #d7ecef 0%, #bdd8df 100%);
+            border-radius: 60px 20px 60px 20px;
+            padding: 48px 28px 40px;
+            margin-bottom: 32px;
+            box-shadow: 0 6px 20px rgba(55, 120, 130, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                repeating-linear-gradient(0deg, #9dc4cb22 1px, transparent 1px),
+                repeating-linear-gradient(90deg, #9dc4cb22 1px, transparent 1px);
+            background-size: 36px 36px;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 550;
+            letter-spacing: -0.01em;
+            color: #10434d;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 small {
+            display: block;
+            font-size: 1rem;
+            font-weight: 400;
+            color: #1d5c68;
+            margin-top: 10px;
+            opacity: 0.75;
+        }
+
+        .hero p {
+            max-width: 620px;
+            margin-top: 18px;
+            font-size: 1.1rem;
+            color: #1b4f5a;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 网格卡片组 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 22px;
+            margin-bottom: 32px;
+        }
+
+        @media (min-width: 600px) {
+            .card-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 960px) {
+            .card-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.80);
+            backdrop-filter: blur(2px);
+            border: 1px solid #d9e9ed;
+            border-radius: 28px;
+            padding: 28px 22px 22px;
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(70, 140, 150, 0.04);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(50, 120, 130, 0.08);
+            border-color: #b3d6dd;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #12515d;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card h3 span {
+            background: #b4d7df;
+            color: #0a3e47;
+            font-size: 0.75rem;
+            padding: 0 10px;
+            border-radius: 30px;
+            height: 24px;
+            line-height: 24px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .card p {
+            font-size: 0.96rem;
+            color: #2b4e58;
+            margin-bottom: 16px;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card li {
+            padding: 4px 0 4px 20px;
+            position: relative;
+            font-size: 0.92rem;
+            color: #1a4c57;
+        }
+
+        .card li::before {
+            content: '·';
+            color: #3e9aa8;
+            font-weight: bold;
+            position: absolute;
+            left: 4px;
+        }
+
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 10px;
+            margin-top: 16px;
+        }
+
+        .tag {
+            background: #d5e9ee;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            color: #0f4955;
+            border: 1px solid #bedce3;
+        }
+
+        /* 自然链接段落 + 适合人群混合区域 */
+        .reading-block {
+            background: #ffffffd9;
+            backdrop-filter: blur(2px);
+            border-radius: 36px;
+            padding: 28px 24px 24px;
+            border: 1px solid #d4e6eb;
+            margin-bottom: 28px;
+        }
+
+        .reading-block h2 {
+            font-size: 1.4rem;
+            font-weight: 550;
+            color: #10434d;
+            margin-bottom: 14px;
+            border-left: 5px solid #6bb2be;
+            padding-left: 16px;
+        }
+
+        .reading-block p {
+            margin-bottom: 16px;
+            color: #1e4550;
+        }
+
+        .reading-block a {
+            color: #126d7a;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dashed #9acbd6;
+            transition: border 0.15s;
+        }
+
+        .reading-block a:hover {
+            border-bottom: 2px solid #0a8c9c;
+        }
+
+        .inline-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 18px;
+            margin: 20px 0 10px;
+        }
+
+        .inline-list span {
+            background: #ecf6f8;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            color: #06404c;
+            border: 1px solid #cbe3e9;
+        }
+
+        /* 小FAQ摘要样式 */
+        .faq-mini {
+            background: #e7f2f5;
+            border-radius: 40px;
+            padding: 24px 22px;
+            margin-top: 20px;
+        }
+
+        .faq-mini h4 {
+            font-weight: 500;
+            color: #03333f;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+
+        .faq-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #cde0e5;
+        }
+
+        .faq-item:last-child {
+            border-bottom: 0;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-weight: 600;
+            color: #0b4d59;
+            margin-bottom: 6px;
+        }
+
+        .faq-item p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #174a55;
+        }
+
+        .hr-soft {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #b6d6de, transparent);
+            margin: 28px 0 10px;
+            border: none;
+            opacity: 0.5;
+        }
+
+        .footnote {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #517782;
+            padding: 20px 10px 8px;
+        }
+
+        .footnote a {
+            color: #126d7a;
+            text-decoration: none;
+        }
+
+        .footnote a:hover {
+            text-decoration: underline;
+        }
+
+        /* 移动端微调 */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .reading-block {
+                padding: 22px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- 主视觉 hero -->
+    <div class="hero">
+        <h1>
+            问鼎H5
+            <small>日常查询 · 对照 · 延伸阅读</small>
+        </h1>
+        <p>
+            把零散的信息收拢成可翻阅的卡片，从一段描述或一个关键词开始，发现更多有价值的上下文。
+        </p>
+    </div>
+
+    <!-- 网格卡片：用途 & 场景 -->
+    <div class="card-grid">
+        <div class="card">
+            <h3>📋 快速对照 <span>常用</span></h3>
+            <p>当你想确认某个名称、术语或版本时，不必在多个页面之间反复切换。一个卡片即可呈现核心信息与关联条目。</p>
+            <ul>
+                <li>术语对照与简短释义</li>
+                <li>版本沿革与参考来源</li>
+                <li>同类内容并排比较</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>🔍 延伸查询 <span>探索</span></h3>
+            <p>阅读过程中遇到陌生概念，或想进一步了解相关主题，可以通过段落中的链接自然跳转，保持思路连贯。</p>
+            <div class="tag-group">
+                <span class="tag">交叉索引</span>
+                <span class="tag">脚注式链接</span>
+                <span class="tag">主题簇</span>
+            </div>
+        </div>
+        <div class="card">
+            <h3>🧩 日常使用 <span>轻量</span></h3>
+            <p>无论是整理读书笔记、记录工作备忘，还是收集感兴趣的话题，都可以借助卡片和简短的摘要快速回顾。</p>
+            <ul>
+                <li>个人知识卡片</li>
+                <li>话题摘要与要点</li>
+                <li>随手标记与归类</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 适合人群 + 自然链接段落 (混合) -->
+    <div class="reading-block">
+        <h2>适合谁，以及怎么用</h2>
+        <p>
+            如果你平时习惯在浏览器里同时打开十几个标签页来回对比，或者经常把零碎的信息记在便签上但之后很难再找到，这种卡片式的信息结构可能会让你觉得舒服一些。它不追求面面俱到，而是把注意力放在“对照”和“延伸”上。
+        </p>
+        <p>
+            比如你在阅读某篇技术短文时遇到一个不熟悉的框架，可以直接在 <a href="https://web-wending.com">问鼎H5</a> 里检索它的基本定位、常用场景以及相关的阅读材料，而不需要从头翻阅文档。同样，当你整理某个主题的要点时，也可以借助卡片把不同来源的观点并排放置，方便对比异同。
+        </p>
+        <div class="inline-list">
+            <span>✏️ 笔记爱好者</span>
+            <span>📚 信息整理者</span>
+            <span>💻 日常浏览者</span>
+            <span>🔎 好奇心驱动</span>
+        </div>
+        <p style="margin-top: 8px;">
+            不需要特意改变已有的习惯，它更像一个安静的辅助工具：当你需要快速确认某个细节，或者想顺着一条线索稍微走远一点的时候，随时可以翻开。
+        </p>
+    </div>
+
+    <!-- FAQ 摘要（克制、真实） -->
+    <div class="faq-mini">
+        <h4>一些你可能想问的</h4>
+        <div class="faq-item">
+            <strong>这些卡片里的信息更新及时吗？</strong>
+            <p>内容会跟随公开资料和社区共识不定期调整，但不承诺实时同步。建议作为参考起点，关键判断仍需核对原始来源。</p>
+        </div>
+        <div class="faq-item">
+            <strong>可以自己添加或整理卡片吗？</strong>
+            <p>目前以浏览和查阅为主，个人定制功能还在逐步完善中。你有好的想法可以通过相关渠道反馈。</p>
+        </div>
+        <div class="faq-item">
+            <strong>移动端体验如何？</strong>
+            <p>页面针对手机和平板做了适配，卡片会自动重排，链接和按钮也有足够大的触控区域。你可以试试横竖屏切换。</p>
+        </div>
+        <div class="faq-item" style="border-bottom: none;">
+            <strong>和搜索引擎的关系是？</strong>
+            <p>不替代搜索，而是帮你把已经找到的信息整理成更容易回顾和对照的形态。更接近“阅读辅助”而非“发现引擎”。</p>
+        </div>
+    </div>
+
+    <hr class="hr-soft">
+
+    <div class="footnote">
+        一个日常查询与延伸阅读的角落 · <a href="https://web-wending.com">问鼎H5</a>
+    </div>
+
+</div>
+</body>
+</html>
